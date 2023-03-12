@@ -28,6 +28,8 @@ body {
   resize: none;
   height: calc(100% - 63px);
   padding-top: 15px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
 .note-title {
@@ -63,6 +65,7 @@ body {
 .list-item-title {
   display: inline-block;
   width: 75%;
+  
 }
 
 .list-container i {
