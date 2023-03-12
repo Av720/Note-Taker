@@ -1,5 +1,7 @@
 const fs = require("fs");
+const express = require("express");
 const data = require("../db/db.json");
+const { v4: uuidv4 } = require('uuid'); // this will create a unique id for each note
 
 // exporting the modules function
 module.exports = function (app) {
@@ -20,6 +22,8 @@ module.exports = function (app) {
 
     const userNote = req.body;
 
+    userNote.id = uuidv4();
+
     let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
 
     // push the new notes from the user into the db.json file
@@ -35,8 +39,23 @@ module.exports = function (app) {
 
   // BONUS: CREATE a DELETE request in order to delete the note using "delete"
 
-    app.delete("/api/notes/:id", (req, res) => {
-
     
+  app.delete("/api/notes/:id", (req, res) => {
+
+      //create a variable to read the data from the 'db.json file
+    let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+
+    let noteId = req.params.id.toString();
+
+    // filter the notes and the new array selected will be erased(will only delete the current note deleted by the user)
+    data = data.filter((selected) => {
+      return selected.id != noteId;
     });
+
+    //this will update the current stored notes file(db.json) 
+    fs.writeFileSync("./db/db.json", JSON.stringify(data));
+
+    //this will send the response 
+    res.json(data);
+  });
 };
