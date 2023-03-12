@@ -2,36 +2,20 @@
 const express = require("express"); // import express
 const path = require("path"); //import node package path
 const app = express(); //init express instance
-const fs = require('fs')
 const data = require('./db/db.json')
 
-// const api = require('./routes/htmlRoutes')
-
-//specify which port express will run
-const PORT = 3001; 
+//specify which port express will run 
+const PORT = 3001;  // this port will change once Heroku is set up 
 
 //middleware(allows public folder to be unblocked)
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
-//HTML Routes
-//Home
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', ''))
-})
-
-//Notes
-app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'notes.html'))
-})
-
-
-app.get('/api/notes', (req, res) => {
-
-  res.json(data);
-});
-
+// create 2 routes (notes and html)
+require('./routes/notesroute')(app);
+require('./routes/htmlroute')(app);
 
 //console.log the port to preview incoming connections
 app.listen(PORT, () =>
