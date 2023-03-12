@@ -3,6 +3,7 @@ const express = require("express"); // import express
 const path = require("path"); //import node package path
 const app = express(); //init express instance
 const fs = require('fs')
+const data = require('./db/db.json')
 
 // const api = require('./routes/htmlRoutes')
 
@@ -19,6 +20,18 @@ app.use(express.static("public"));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', ''))
 })
+
+//Notes
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'notes.html'))
+})
+
+
+app.get('/api/notes', (req, res) => {
+
+  res.json(data);
+});
+
 
 //console.log the port to preview incoming connections
 app.listen(PORT, () =>
