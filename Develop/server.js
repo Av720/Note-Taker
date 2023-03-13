@@ -5,7 +5,7 @@ const app = express(); //init express instance
 const data = require('./db/db.json')
 
 //specify which port express will run 
-const PORT = 3001;  // this port will change once Heroku is set up 
+const PORT = process.env.PORT || 3001;  
 
 //middleware(allows public folder to be unblocked)
 app.use(express.json());
