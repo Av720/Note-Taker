@@ -37,7 +37,7 @@ module.exports = function (app) {
     res.json(data);
   });
 
-  // BONUS: CREATE a DELETE request in order to delete the note using "delete"
+  // Create a DELETE route using the id to 
 
     
   app.delete("/api/notes/:id", (req, res) => {
@@ -45,6 +45,8 @@ module.exports = function (app) {
       //create a variable to read the data from the 'db.json file
     let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
 
+    // this will fetch the id to delete it
+    //  req.params property is an object containing properties mapped to the named route “parameters” (self note)
     let noteId = req.params.id.toString();
 
     // filter the notes and the new array selected will be erased(will only delete the current note deleted by the user)
